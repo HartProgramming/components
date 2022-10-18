@@ -7,6 +7,7 @@ import Card from "./Card";
 function AddUser(props) {
   const [user, setUser] = useState("Edward");
   const [age, setAge] = useState("30");
+  const [error, setError] = useState();
 
   const changeUserHandler = (e) => {
     console.log(e.target.value);
@@ -32,51 +33,55 @@ function AddUser(props) {
     console.log(dataObj);
     if (user.trim().length === 0 && age.trim().length === 0) {
       console.log(dataObj);
-      return (
-        <div>
-          <InvalidInput paragraph={"Invalid Input"}></InvalidInput>
-        </div>
-      );
+      setError({
+        paragraph: 'Invalid Input'
+      })
+      return
+     
     } else if (age < 0) {
       console.log("hi");
-      return (
-        <div>
-          <InvalidInput
-            paragraph={"Please enter a valid age greater than 0"}
-          ></InvalidInput>
-        </div>
-      );
+      setError({
+        paragraph: 'Invalid age'
+      })
+      return
     }
 
     props.saveData(dataObj);
   };
 
+  const errorHandler = () => {
+    setError(null);
+  }
+
   return (
-    <Card className={userStyles.form}>
-      <form className={userStyles.form} onSubmit={addUserHandler}>
-        <label htmlFor="user" className={userStyles.label}>
-          Username
-        </label>
-        <input
-          id="user"
-          onChange={changeUserHandler}
-          value={user}
-          className={userStyles.input}
-          type="text"
-        />
-        <label htmlFor="age" className={userStyles.label}>
-          Age
-        </label>
-        <input
-          id="age"
-          onChange={changeAgeHandler}
-          type="number"
-          value={age}
-          className={userStyles.input}
-        />
-        <Button type="submit">Add User</Button>
-      </form>
-    </Card>
+    <div>
+      {error && <InvalidInput onConfirm={errorHandler} paragraph={error.paragraph} /> }
+      <Card className={userStyles.form}>
+        <form className={userStyles.form} onSubmit={addUserHandler}>
+          <label htmlFor="user" className={userStyles.label}>
+            Username
+          </label>
+          <input
+            id="user"
+            onChange={changeUserHandler}
+            value={user}
+            className={userStyles.input}
+            type="text"
+          />
+          <label htmlFor="age" className={userStyles.label}>
+            Age
+          </label>
+          <input
+            id="age"
+            onChange={changeAgeHandler}
+            type="number"
+            value={age}
+            className={userStyles.input}
+          />
+          <Button type="submit">Add User</Button>
+        </form>
+      </Card>
+    </div>
   );
 }
 

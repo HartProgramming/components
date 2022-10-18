@@ -4,6 +4,11 @@
     margin: auto;
     height: 350px;
     width: 50%;
+    position: absolute;
+    z-index: 4;
+    top: 50%;
+    border: 3px solid black;
+    left: 20%;
 }
 
 .divHead{
