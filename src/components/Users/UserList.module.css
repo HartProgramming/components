@@ -1,0 +1,8 @@
+
+
+.ul{
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+}
